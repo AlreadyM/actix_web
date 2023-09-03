@@ -49,6 +49,7 @@ impl Actor for MyWebSocket {
 
     /// Method is called on actor start. We start the heartbeat process here.
     fn started(&mut self, ctx: &mut Self::Context) {
+        println!("websocket connect");
         self.hb(ctx);
     }
 }

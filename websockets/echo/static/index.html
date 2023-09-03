@@ -112,7 +112,7 @@
         }
 
         socket.onclose = () => {
-          log('Disconnected')
+          console.log('Disconnected')
           socket = null
           updateConnectionStatus()
         }
@@ -120,7 +120,7 @@
 
       function disconnect() {
         if (socket) {
-          log('Disconnecting...')
+          console.log('Disconnecting...')
           socket.close()
           socket = null
 

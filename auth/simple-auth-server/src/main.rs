@@ -22,7 +22,7 @@ async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-
+    // let database_url = "10.10.10.104:5432";
     // create db connection pool
     let manager = r2d2::ConnectionManager::<PgConnection>::new(database_url);
     let pool: models::Pool = r2d2::Pool::builder()
@@ -69,7 +69,7 @@ async fn main() -> std::io::Result<()> {
                     ),
             )
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("::", 8080))?
     .run()
     .await
 }

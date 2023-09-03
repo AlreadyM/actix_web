@@ -7,7 +7,7 @@ use crate::{
     models::{Invitation, Pool},
 };
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct InvitationData {
     pub email: String,
 }
@@ -16,6 +16,7 @@ pub async fn post_invitation(
     invitation_data: web::Json<InvitationData>,
     pool: web::Data<Pool>,
 ) -> Result<HttpResponse, actix_web::Error> {
+    println!("invitation got request:{:?}",invitation_data);
     // run diesel blocking code
     web::block(move || create_invitation(invitation_data.into_inner().email, pool)).await??;
 
@@ -27,6 +28,7 @@ fn create_invitation(
     pool: web::Data<Pool>,
 ) -> Result<(), crate::errors::ServiceError> {
     let invitation = dbg!(query(eml, pool)?);
+    println!("invitation is:{:?}",invitation);
     send_invitation(&invitation)
 }
 
@@ -37,7 +39,7 @@ fn query(eml: String, pool: web::Data<Pool>) -> Result<Invitation, crate::errors
     let mut conn = pool.get().unwrap();
 
     let new_invitation = Invitation::from(eml);
-
+    println!("new_invitation:{:?}",new_invitation);
     let inserted_invitation = diesel::insert_into(invitations)
         .values(&new_invitation)
         .get_result(&mut conn)?;

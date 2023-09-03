@@ -69,7 +69,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
     })
     .workers(2)
-    .bind(("127.0.0.1", 8080))?
+    .bind(("::", 8080))?
+    // .bind(("0.0.0.0", 8080))?
     .run()
     .await
 }

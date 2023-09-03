@@ -30,7 +30,8 @@ async fn main() {
     });
 
     let (res, mut ws) = awc::Client::new()
-        .ws("ws://127.0.0.1:8080/ws")
+        .ws("ws://10.10.10.104:8080/ws")
+        // .ws("ws://[fda5:714a:205d::55a]:8080/ws")
         .connect()
         .await
         .unwrap();

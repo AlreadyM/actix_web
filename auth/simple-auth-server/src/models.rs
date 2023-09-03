@@ -40,11 +40,13 @@ where
     T: Into<String>,
 {
     fn from(email: T) -> Self {
-        Invitation {
+        let r = Invitation {
             id: uuid::Uuid::new_v4(),
             email: email.into(),
             expires_at: chrono::Local::now().naive_local() + chrono::Duration::hours(24),
-        }
+        };
+        println!("{:?}",r);
+        return r
     }
 }
 

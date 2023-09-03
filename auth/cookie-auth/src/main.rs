@@ -1,5 +1,6 @@
 use actix_identity::{Identity, IdentityMiddleware};
 use actix_session::{config::PersistentSession, storage::CookieSessionStore, SessionMiddleware};
+use actix_web::HttpResponse;
 use actix_web::{
     cookie::{time::Duration, Key},
     error,
@@ -22,13 +23,15 @@ async fn index(identity: Option<Identity>) -> actix_web::Result<impl Responder> 
 async fn login(req: HttpRequest) -> impl Responder {
     Identity::login(&req.extensions(), "user1".to_owned()).unwrap();
 
-    web::Redirect::to("/").using_status_code(StatusCode::FOUND)
+    // web::Redirect::to("/").using_status_code(StatusCode::FOUND)
+    HttpResponse::Ok().body("login".to_owned())
 }
 
 async fn logout(id: Identity) -> impl Responder {
     id.logout();
 
-    web::Redirect::to("/").using_status_code(StatusCode::FOUND)
+    HttpResponse::Ok().body("logout".to_owned())
+    // web::Redirect::to("/").using_status_code(StatusCode::FOUND)
 }
 
 #[actix_web::main]
@@ -69,7 +72,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::NormalizePath::trim())
             .wrap(middleware::Logger::default())
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("::", 8080))?
     .run()
     .await
 }

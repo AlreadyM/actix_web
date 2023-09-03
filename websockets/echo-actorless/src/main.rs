@@ -10,7 +10,7 @@ use actix_web::{
 mod handler;
 
 async fn index() -> impl Responder {
-    NamedFile::open_async("./static/index.html").await.unwrap()
+    NamedFile::open_async("../static/index.html").await.unwrap()
 }
 
 /// Handshake and start WebSocket handler with heartbeats.
@@ -55,7 +55,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
     })
     .workers(2)
-    .bind(("127.0.0.1", 8080))?
+    .bind(("::", 8081))?
     .run()
     .await
 }

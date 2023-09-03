@@ -55,10 +55,12 @@ pub async fn echo_heartbeat_ws(
                     Message::Ping(bytes) => {
                         last_heartbeat = Instant::now();
                         let _ = session.pong(&bytes).await;
+                        println!("get ping");
                     }
 
                     Message::Pong(_) => {
                         last_heartbeat = Instant::now();
+                        println!("get pong");
                     }
 
                     Message::Continuation(_) => {

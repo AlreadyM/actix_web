@@ -44,11 +44,14 @@ On many Linux distributions you may prefix the shell commands with `sudo -u post
 
    ```shell
    psql -f sql/schema.sql testing_db
+      copy file into postgres permission folder
+         cp /home/remote/Documents/examples/databases/postgres/sql/schema.sql /var/lib/postgresql/15
    ```
 
    This step can be repeated and clears the database as it drops and recreates the schema `testing` which is used within the database.
 
 4. Grant privileges to new user
+   psql testing_db 切换值testing_db 进行如下操作
 
    ```sql
    GRANT ALL PRIVILEGES ON SCHEMA testing TO test_user;
@@ -59,11 +62,11 @@ On many Linux distributions you may prefix the shell commands with `sudo -u post
 5. Create `.env` file:
 
    ```ini
-   SERVER_ADDR=127.0.0.1:8080
+   SERVER_ADDR=127.0.0.1:8088
    PG.USER=test_user
    PG.PASSWORD=testing
    PG.HOST=127.0.0.1
-   PG.PORT=5432
+   PG.PORT=5433
    PG.DBNAME=testing_db
    PG.POOL.MAX_SIZE=16
    ```

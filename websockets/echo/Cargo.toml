@@ -12,14 +12,28 @@ name = "websocket-client"
 path = "src/client.rs"
 
 [dependencies]
-actix.workspace = true
-actix-files.workspace = true
-actix-web.workspace = true
-actix-web-actors.workspace = true
-awc.workspace = true
+# actix.workspace = true
+# actix-files.workspace = true
+# actix-web.workspace = true
+# actix-web-actors.workspace = true
+# awc.workspace = true
+actix = {version="0.13.0"}
+actix-session = {version="0.7.2",features=["cookie-session"]}
+actix-files = {version="0.6.2"}
+actix-web = {version="4.3.1"}
+actix-web-actors = {version="4.2.0"}
+awc = {version="3.1.1"}
+# cookie-session = {version="*"}
+# env_logger.workspace = true
+# futures-util = { workspace = true, features = ["async-await","sink", "std"] }
+# log.workspace = true
+# tokio = { workspace = true, features = ["full"] }
+# tokio-stream = "0.1.8"
 
-env_logger.workspace = true
-futures-util = { workspace = true, features = ["sink"] }
-log.workspace = true
-tokio = { workspace = true, features = ["full"] }
-tokio-stream = "0.1.8"
+env_logger = {version="0.10.0"}
+futures-util = {version = "0.3.28", features=["async-await","sink", "std"]}
+log = {version="0.4.20"}
+tokio = {version="1.31.0", features=["full"]}
+serde={version = "1.0.183" ,features = ["derive"]}
+
+

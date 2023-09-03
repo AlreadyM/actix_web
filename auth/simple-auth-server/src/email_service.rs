@@ -8,8 +8,12 @@ use crate::{errors::ServiceError, models::Invitation};
 static API_KEY: Lazy<String> =
     Lazy::new(|| std::env::var("SPARKPOST_API_KEY").expect("SPARKPOST_API_KEY must be set"));
 
-pub fn send_invitation(invitation: &Invitation) -> Result<(), ServiceError> {
-    let tm = Transmission::new_eu(API_KEY.as_str());
+// pub fn send_invitation(invitation: &Invitation) -> Result<(), _> {
+pub fn send_invitation(invitation: &Invitation) -> Result<(), crate::errors::ServiceError> {
+    println!("Invitation id:{}",invitation.id);
+
+    // init email api
+    // let tm = Transmission::new_eu(API_KEY.as_str());
     let sending_email =
         std::env::var("SENDING_EMAIL_ADDRESS").expect("SENDING_EMAIL_ADDRESS must be set");
     // new email message with sender name and email
@@ -44,8 +48,8 @@ pub fn send_invitation(invitation: &Invitation) -> Result<(), ServiceError> {
         .subject("You have been invited to join Simple-Auth-Server Rust")
         .html(email_body);
 
-    let result = tm.send(&email);
-
+    // let result = tm.send(&email);
+    let result = Err("email send error");
     // Note that we only print out the error response from email api
     match result {
         Ok(res) => match res {
@@ -60,7 +64,9 @@ pub fn send_invitation(invitation: &Invitation) -> Result<(), ServiceError> {
         },
         Err(error) => {
             println!("Send Email Error: \n {error:#?}");
-            Err(ServiceError::InternalServerError)
+            println!("invitation is:{:?}",invitation);
+            return Ok(());
+            // Err(ServiceError::InternalServerError);
         }
     }
 }
